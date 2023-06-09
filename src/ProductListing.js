@@ -12,7 +12,7 @@ const ProductListing = () => {
   const getCategories = (data) => {
     const set = new Set();
     data.map((item) => set.add(item.category));
-    return [...set];
+    return Array.from(set).map((item) => ({ category: item, isActive: false }));
   };
 
   useEffect(() => {
