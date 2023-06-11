@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { PRICE, RATING } from "./constants";
 import "./index.css";
 
 const ProductFilters = ({ categories = [], updateProductData }) => {

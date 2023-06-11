@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import ProductFilters from "./ProductFilters";
 import ProductCard from "./ProductCard";
-import { PRODUCT_API } from "./constants";
+import { PRODUCT_API, RATING, PRICE } from "./constants";
 import { fetchData } from "./util";
 import "./index.css";
 
@@ -35,9 +35,22 @@ const ProductListing = () => {
   useEffect(() => {
     async function fetching() {
       const response = await fetchData(PRODUCT_API);
-      setAllProductData(response);
-      setFilterData(response);
-      setCategories(getCategories(response));
+      const updatedReponse = response.map((item) => {
+        let priceRange = "";
+        let ratingRange = "";
+        PRICE.map((price) => {
+          if (price.max > item.price && item.price >= price.min)
+            priceRange = price.text;
+        });
+        RATING.map((rating) => {
+          if (rating.max > item.rating.rate && item.rating.rate >= rating.min)
+            ratingRange = rating.text;
+        });
+        return { ...item, priceRange, ratingRange };
+      });
+      setAllProductData(updatedReponse);
+      setFilterData(updatedReponse);
+      setCategories(getCategories(updatedReponse));
     }
     fetching();
   }, []);
