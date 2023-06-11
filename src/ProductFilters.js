@@ -1,20 +1,27 @@
 import { useEffect } from "react";
 import "./index.css";
 
-const ProductFilters = ({ categories }) => {
-  useEffect(() => {}, [categories]);
+const ProductFilters = ({ categories = [], updateProductData }) => {
+  useEffect(() => {
+    console.log(categories);
+  }, [categories]);
   return (
     <div className="filter-container">
       <div>Filter</div>
       <div>Categories</div>
       {categories.map((category) => {
         return (
-          <div key={category.category}>
+          <div key={category}>
             <input
               type="checkbox"
-              onChange={() => (category.isActive = !category.isActive)}
+              id={category}
+              value={category}
+              name="category"
+              onChange={(e) =>
+                updateProductData("category", category, e.target.checked)
+              }
             />
-            <label>{category.category}</label>
+            <label>{category}</label>
             <br />
           </div>
         );
