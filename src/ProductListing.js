@@ -22,12 +22,13 @@ const ProductListing = () => {
     if (!filterKeys[key]) filterKeys[key] = [];
     if (isChecked) filterKeys[key].push(value);
     else filterKeys[key] = filterKeys[key].filter((item) => item !== value);
+    if (!filterKeys[key].length) delete filterKeys[key];
     const updateData = allProductData.filter((item) => {
-      return Object.keys(filterKeys).filter((filterKey) => {
+      return Object.keys(filterKeys).every((filterKey) => {
         return filterKeys[filterKey].some(
           (subkey) => item[filterKey] === subkey
         );
-      }).length;
+      });
     });
     setFilterData(updateData);
   };
@@ -38,11 +39,11 @@ const ProductListing = () => {
       const updatedReponse = response.map((item) => {
         let priceRange = "";
         let ratingRange = "";
-        PRICE.map((price) => {
+        PRICE.forEach((price) => {
           if (price.max > item.price && item.price >= price.min)
             priceRange = price.text;
         });
-        RATING.map((rating) => {
+        RATING.forEach((rating) => {
           if (rating.max > item.rating.rate && item.rating.rate >= rating.min)
             ratingRange = rating.text;
         });
@@ -54,10 +55,6 @@ const ProductListing = () => {
     }
     fetching();
   }, []);
-
-  useEffect(() => {
-    console.log("pro", filterData);
-  }, [filterData]);
 
   return (
     <div className="container">

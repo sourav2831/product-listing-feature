@@ -1,17 +1,32 @@
 .container {
   display: flex;
-  justify-content: space-between;
   width: 100%;
   border-top: 1px solid black;
   margin-top: 5px;
 }
 
 .filter-container {
-  width: 30%;
+  min-width: 200px;
   height: 100vh;
   border-right: 1px solid black;
 }
 
-.cards-container {
-  border: 1px solid black;
+.cardContainer {
+  width: 200px;
+  height: 200px;
+}
+
+.imageContainer {
+  width: 100px;
+  height: 100px;
+}
+
+.productDesc {
+  font-size: small;
+}
+
+.productList {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 10px;
 }
